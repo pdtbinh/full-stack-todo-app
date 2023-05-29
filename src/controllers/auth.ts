@@ -27,6 +27,7 @@ export const checkUnauthenticated = (req: Request, res: Response, next: NextFunc
 }
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
+    console.log('************ enter register')
     const inner = async (req: Request, res: Response, next: NextFunction) => {
         const { fullname, email, password }: RegisterRequestBody = req.body
         const user = await getUserByEmail(email)
@@ -34,9 +35,10 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
             return res.status(409).json({'error': 'This email has already been used.'})
         }   
         const hashedPassword = await bcrypt.hash(password, 10)
-        await pool.query(
+        const result = await pool.query(
             'INSERT INTO doer (fullname, email, password) VALUES ($1, $2, $3)',
             [fullname, email, hashedPassword])
+        console.log('************ done register')
         return next()
     }
     await wrapAsync(inner)(req, res, next)
