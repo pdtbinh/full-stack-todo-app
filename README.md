@@ -4,6 +4,7 @@ The backend handles authentication and sending response for request.
 Backend is hosted on: https://perntodo.herokuapp.com
 
 All routes:
+
 `GET /`: Send user info
 
 `GET /todos`: Send todos owned by authenticated user
@@ -17,6 +18,7 @@ All routes:
 Folder structure:
 ```
 src
-|_authentication
-|_controllers
+|-authentication
+|-controllers
+|-
 ```
