@@ -1,6 +1,6 @@
 import { FecthDataParams } from "../types/types"
 
-export const backendURL = 'http://localhost:3000'
+export const backendURL = 'https://perntodo.herokuapp.com'
 
 export const fetchData = async ({ url, method, body} : FecthDataParams) => {
     const response = await fetch(
