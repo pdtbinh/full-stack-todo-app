@@ -18,7 +18,7 @@ dotenv.config()
 
 // Middleware
 app.use(cors({
-    origin : 'http://localhost:3001',
+    origin : 'https://pdtbinh.github.io/full-stack-todo-app',
     credentials: true,
 }))
 app.use(express.json())
