@@ -11,19 +11,13 @@ import authRoute from './routes/auth'
 import todoRoute from './routes/todo'
 import { getUserByEmail, getUserByID } from './utils/utils'
 import genFunc from 'connect-pg-simple';
-
-
+import pool from './db/pool'
+const PostgresqlStore = genFunc(session);
 
 // Initialization
 const app = express()
 initializePassport(passport, getUserByEmail, getUserByID)
 dotenv.config()
-
-
-const PostgresqlStore = genFunc(session);
-const sessionStore = new PostgresqlStore({
-  conString: process.env.DATABASE_URL,
-});
 
 // Middleware
 app.use(cors({
@@ -34,7 +28,10 @@ app.use(express.json())
 app.use(bodyParser.json())
 app.use(flash())
 app.use(session({ 
-    store: sessionStore,
+    store: new PostgresqlStore({
+        pool: pool,
+        conString: process.env.DATABASE_URL,
+    }),
     secret: process.env.SESSION_SECRET || '',
     resave: true,
     saveUninitialized: true,
