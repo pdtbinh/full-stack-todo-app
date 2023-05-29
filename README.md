@@ -8,11 +8,15 @@ All routes:
 `GET /`: Send user info
 
 `GET /todos`: Send todos owned by authenticated user
+
 `POST /todos`: Create todo
+
 `PUT /todos/:id`: Edit todo
+
 `DELETE /todo/:id`: Delete todo
 
 `POST /login`: Login user
+
 `POST /register`: Register new user
 
 Some info on .src children folders:
