@@ -5,14 +5,14 @@ import bodyParser from 'body-parser'
 import passport from 'passport'
 import initializePassport from './authentication/passport-config'
 import flash from 'express-flash'
-import session from 'cookie-session'
+import session from 'express-session'
 import dotenv from 'dotenv'
 import authRoute from './routes/auth'
 import todoRoute from './routes/todo'
 import { getUserByEmail, getUserByID } from './utils/utils'
 import genFunc from 'connect-pg-simple';
 import pool from './db/pool'
-//const PostgresqlStore = genFunc(session);
+const PostgresqlStore = genFunc(session);
 
 // Initialization
 const app = express()
@@ -28,11 +28,17 @@ app.use(express.json())
 app.use(bodyParser.json())
 app.use(flash())
 app.use(session({ 
+    // store: new PostgresqlStore({
+    //     client: pool,
+    //     conString: process.env.DATABASE_URL,
+    // }),
     secret: process.env.SESSION_SECRET || '',
-    //resave: true,
-    //saveUninitialized: true,
-    //proxy: true,
-    //cookie: { maxAge: 3600000 }
+    resave: true,
+    saveUninitialized: true,
+    proxy: true,
+    cookie: {
+      maxAge: 3600000,
+    }
  }))
  app.use(passport.initialize())
  app.use(passport.session())
