@@ -37,9 +37,9 @@ const Register: React.FC<RegisterProps> = ({ authenticateUser }) => {
         console.log('After registration: ', user)
         if (user?.id) {
           authenticateUser(user)
-        } else {
+        } else if (user?.error) {
           setOpenError(true)
-          setErrorMsg('Internal server error. Please reload and try again.')
+          setErrorMsg(user.error)
         }
       } catch (err: any) {
         setOpenError(true)

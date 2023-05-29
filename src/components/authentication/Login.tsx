@@ -30,9 +30,9 @@ const Login: React.FC<LoginProps> = ({ authenticateUser }) => {
       const user = await response.json()
       if (user?.id) {
         authenticateUser(user)
-      } else {
+      } else if (user?.error) {
         setOpenError(true)
-        setErrorMsg('Internal server error. Please reload and try again.')
+        setErrorMsg(user.error)
       }
     } catch (err: any) {
       setOpenError(true)
@@ -50,7 +50,7 @@ const Login: React.FC<LoginProps> = ({ authenticateUser }) => {
       <h1>LOGIN</h1>
       <div className='TextGroup'>
         <div>
-          <TextField required label='Email' type="search" id="email" value={email} onChange={handleEmailChange} />
+          <TextField required label='Email' type="email" id="email" value={email} onChange={handleEmailChange} />
         </div>
         <div>
           <TextField autoFocus required label='Password' type="password" id="password" value={password} onChange={handlePasswordChange} />
