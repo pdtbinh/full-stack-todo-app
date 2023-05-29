@@ -15,10 +15,9 @@ All routes:
 `POST /login`: Login user
 `POST /register`: Register new user
 
-Folder structure:
-```
-src
-|-authentication
-|-controllers
-|-
-```
+.src folder structure:
+
+.src
+|-- authentication
+|-- controllers
+|-- db
