@@ -28,15 +28,15 @@ const Login: React.FC<LoginProps> = ({ authenticateUser }) => {
         { url: `${backendURL}/login`, method: 'post', body: { email, password } }
       )
       const user = await response.json()
-      if (user?.error) {
-        setOpenError(true)
-        setErrorMsg(user.error)
-      } else {
+      if (user?.id) {
         authenticateUser(user)
+      } else {
+        setOpenError(true)
+        setErrorMsg('Internal server error. Please reload and try again.')
       }
     } catch (err: any) {
       setOpenError(true)
-      setErrorMsg('Internal error. Please try again.')
+      setErrorMsg('Internal error. Please reload and try again.')
     }
   }
 

@@ -34,15 +34,16 @@ const Register: React.FC<RegisterProps> = ({ authenticateUser }) => {
             { url: `${backendURL}/register`, method: 'post', body: { fullname, email, password } }
         )
         const user = await response.json()
-        if (user?.error) {
-          setOpenError(true)
-          setErrorMsg(user.error)
-        } else {
+        console.log('After registration: ', user)
+        if (user?.id) {
           authenticateUser(user)
+        } else {
+          setOpenError(true)
+          setErrorMsg('Internal server error. Please reload and try again.')
         }
       } catch (err: any) {
         setOpenError(true)
-        setErrorMsg('Internal error. Please try again.')
+        setErrorMsg('Internal error. Please reload and try again.')
       }
     }
 

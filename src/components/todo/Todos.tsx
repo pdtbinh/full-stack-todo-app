@@ -5,7 +5,9 @@ import Todo from './Todo';
 import { backendURL, fetchData } from '../../utils/utils';
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button';
+import Error from '../error/Error';
 import './todoStyle.css'
+import '../error/errorStyle.css'
 
 const Todos: React.FC<TodosProps> = ({ user, logUserOut }) => {
 
@@ -16,6 +18,10 @@ const Todos: React.FC<TodosProps> = ({ user, logUserOut }) => {
     const [content, setContent] = useState<string>('')
 
     const [addingTodo, setAddingTodo] = useState<boolean>(false)
+
+    const [openError, setOpenError] = useState<boolean>(false)
+
+    const [errorMsg, setErrorMsg] = useState<string>('')
 
     const fetchTodo = async () => {
         if (user) {
@@ -33,13 +39,23 @@ const Todos: React.FC<TodosProps> = ({ user, logUserOut }) => {
     const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) => setContent(e.target.value)
 
     const handleAddTodo = async () => {
-        const response = await fetchData(
-            { url: `${backendURL}/todos`, method: 'post', body: { content } }
-        )
-        const todos = await response.json()
-        if (todos) setTodos(todos)
-        setContent('')
-        setAddingTodo(false)
+        try {
+            if (content !== '') {
+                const response = await fetchData(
+                    { url: `${backendURL}/todos`, method: 'post', body: { content } }
+                )
+                const todos = await response.json()
+                if (todos?.[0]) setTodos(todos)
+                setContent('')
+                setAddingTodo(false)
+            } else {
+                setOpenError(true)
+                setErrorMsg('Todo cannot be empty.')
+            }
+        } catch (err: any) {
+            setOpenError(true)
+            setErrorMsg('Internal error. Please reload and try again.')
+        }
     }
 
     const handleCancelAddTodo = () => {
@@ -48,12 +64,17 @@ const Todos: React.FC<TodosProps> = ({ user, logUserOut }) => {
     }
 
     const handleLogout =  async () => {
-        const response = await fetchData(
-            { url: `${backendURL}/logout`, method: 'post', body: null }
-        )
-        if (response.status === 204) {
-            logUserOut()
-            navigate('/login')
+        try {
+            const response = await fetchData(
+                { url: `${backendURL}/logout`, method: 'post', body: null }
+            )
+            if (response.status === 204) {
+                logUserOut()
+                navigate('/login')
+            }
+        } catch (err: any) {
+            setOpenError(true)
+            setErrorMsg('Internal error. Please reload and try again.')
         }
     }
 
@@ -66,6 +87,11 @@ const Todos: React.FC<TodosProps> = ({ user, logUserOut }) => {
 
     const deleteTodo = (id: number) => {
         setTodos(todos.filter((el: any) => el.id !== id)) 
+    }
+
+    const handleCloseError = () => {
+        setOpenError(false)
+        setErrorMsg('')
     }
 
     return (
@@ -102,6 +128,11 @@ const Todos: React.FC<TodosProps> = ({ user, logUserOut }) => {
                 Logout
             </Button>
         </div> : null}
+
+            
+        <Error openError={openError} message={errorMsg}>
+            <Button className='ErrorClose' onClick={handleCloseError}>Close</Button>
+        </Error>
       </div>
     );
 };
