@@ -18,7 +18,7 @@ dotenv.config()
 
 // Middleware
 app.use(cors({
-    origin : 'https://pdtbinh.github.io/full-stack-todo-app',
+    origin : 'https://6474300d37f6b0327a80ec10--adorable-alfajores-27f7f2.netlify.app',
     credentials: true,
 }))
 app.use(express.json())
