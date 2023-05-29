@@ -1,5 +1,5 @@
 This is the backend of Todo App. 
-The backend handles authentication and sending response for request.
+The backend handles authentication (with Passport) and sending responses for requests.
 
 Backend is hosted on: https://perntodo.herokuapp.com
 
@@ -15,9 +15,14 @@ All routes:
 `POST /login`: Login user
 `POST /register`: Register new user
 
-.src folder structure:
+Some info on .src children folders:
 
 .src
-|-- authentication
-|-- controllers
-|-- db
+├── index.ts
+├── authentication: Configure Passport
+├── db: Configure database connections
+├── controllers: Functions for handling requests
+├── routes: Grouping routes
+├── types: Some Typescript types
+├── utils: Helper, wrapper (catch error) functions
+
