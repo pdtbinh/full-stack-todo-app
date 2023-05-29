@@ -2,8 +2,6 @@ import { Pool } from 'pg'
 import dotenv from 'dotenv'
 dotenv.config()
 
-console.log(`*************${process.env.DB_PASSWORD}*****************`)
-
 const pool = new Pool({
     user: 'lexppvljwytmxz',
     password: process.env.DB_PASSWORD,
