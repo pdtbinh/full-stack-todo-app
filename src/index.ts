@@ -10,6 +10,8 @@ import dotenv from 'dotenv'
 import authRoute from './routes/auth'
 import todoRoute from './routes/todo'
 import { getUserByEmail, getUserByID } from './utils/utils'
+import cookieParser from 'cookie-parser'
+
 import genFunc from 'connect-pg-simple';
 import pool from './db/pool'
 const PostgresqlStore = genFunc(session);
@@ -20,6 +22,8 @@ initializePassport(passport, getUserByEmail, getUserByID)
 dotenv.config()
 
 // Middleware
+app.use(express.urlencoded({extended: true}));
+app.use(cookieParser(process.env.SESSION_SECRET || ''))
 app.use(cors({
     origin : 'http://localhost:3000',
     credentials: true,
@@ -38,7 +42,11 @@ app.use(session({
     saveUninitialized: true,
     proxy: true,
     cookie: {
-      maxAge: 3600000,
+        httpOnly: true,
+        expires: new Date(Date.now() + 1000 * 3600 * 24 * 7),
+        maxAge: 1000 * 3600 * 24 * 7,
+        sameSite: 'none',
+        secure: true,
     }
  }))
  app.use(passport.initialize())
