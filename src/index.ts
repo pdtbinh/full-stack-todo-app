@@ -28,10 +28,10 @@ app.use(express.json())
 app.use(bodyParser.json())
 app.use(flash())
 app.use(session({ 
-    // store: new PostgresqlStore({
-    //     client: pool,
-    //     conString: process.env.DATABASE_URL,
-    // }),
+    store: new PostgresqlStore({
+        //pool: pool,
+        conString: process.env.DATABASE_URL,
+    }),
     secret: process.env.SESSION_SECRET || '',
     resave: true,
     saveUninitialized: true,
