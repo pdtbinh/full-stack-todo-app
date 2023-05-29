@@ -26,8 +26,8 @@ app.use(bodyParser.json())
 app.use(flash())
 app.use(session({ 
     secret: process.env.SESSION_SECRET || '',
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     proxy: true,
     cookie: {
       maxAge: 3600000,
