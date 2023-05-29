@@ -25,7 +25,7 @@ dotenv.config()
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser(process.env.SESSION_SECRET || ''))
 app.use(cors({
-    origin : 'http://localhost:3000',
+    origin : 'https://6474534782d5094b04b6faf0--shiny-sfogliatella-be576b.netlify.app',
     credentials: true,
 }))
 app.use(express.json())
