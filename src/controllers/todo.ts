@@ -7,7 +7,7 @@ import { getUserIDbyTodoID } from '../utils/utils'
 export const getAllTodos = async (req: Request, res: Response, next: NextFunction) => {
     const inner = async (req: Request, res: Response, next: NextFunction) => {
         const user_id: number = (req.user as User).id
-        const todo = await pool.query('SELECT * FROM todo WHERE user_id = $1 ORDER BY id ASC', [user_id])
+        const todo = await pool.query('SELECT * FROM todo WHERE user_id = $1', [user_id])
         res.status(200).json((todo.rows as User[]))
     }
     await wrapAsync(inner)(req, res, next)
@@ -21,7 +21,7 @@ export const createTodo = async (req: Request, res: Response, next: NextFunction
             'INSERT INTO todo (user_id, content) VALUES ($1, $2)',
             [user_id, content]
         )
-        const todo = await pool.query('SELECT * FROM todo WHERE user_id = $1 ORDER BY id ASC', [user_id])
+        const todo = await pool.query('SELECT * FROM todo WHERE user_id = $1', [user_id])
         res.status(201).json((todo.rows as User[]))
     }
     await wrapAsync(inner)(req, res, next)
