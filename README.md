@@ -17,6 +17,7 @@ All routes:
 
 Some info on .src children folders:
 
+```
 .src
 ├── index.ts
 ├── authentication: Configure Passport
@@ -25,4 +26,4 @@ Some info on .src children folders:
 ├── routes: Grouping routes
 ├── types: Some Typescript types
 ├── utils: Helper, wrapper (catch error) functions
-
+```
