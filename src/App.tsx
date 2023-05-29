@@ -29,7 +29,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="App">
-        <h1>Todo App</h1>
+        <h1>{ user ? `${user.fullname}'s Todos List` : 'Todo App'}</h1>
         <Routes>
           <Route path="/login" element={<AuthPage authenticateUser={authenticateUser} user={user}/>}/>
           <Route path="/" element={<Todos logUserOut={logUserOut} user={user}/>}/>
