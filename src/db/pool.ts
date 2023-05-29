@@ -2,7 +2,7 @@ import { Pool, Client } from 'pg'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const pool = new Client({
+const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {
         rejectUnauthorized: false
