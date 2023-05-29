@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { LoginProps, User } from '../../types/types'
+import React, { useState } from 'react'
+import { LoginProps } from '../../types/types'
 import { backendURL, fetchData } from '../../utils/utils'
 import './authStyle.css'
 import TextField from '@mui/material/TextField'
